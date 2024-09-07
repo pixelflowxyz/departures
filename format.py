@@ -1,4 +1,4 @@
-import data
+import busdata
 from datetime import datetime, timedelta
 
 southbound = "brijmjt"  # THELEVEL_P
@@ -6,7 +6,7 @@ northbound = "bridtpm"  # THELEVEL_I
 
 
 def getdata():
-    return data.combine_two_stops(northbound, southbound)
+    return busdata.combine_two_stops(northbound, southbound)
 
 
 def round_to_nearest_minute(time):

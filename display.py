@@ -1,7 +1,7 @@
 """Generate the graphic for the display"""
 
 from PIL import Image, ImageDraw, ImageFont
-import data
+import busdata
 import format
 
 extrabold19 = ImageFont.truetype('fonts/Inter-ExtraBold.ttf', 19)
@@ -13,7 +13,7 @@ white = 255
 width = 250
 height = 112
 
-data = format.getdata()
+busdata = format.getdata()
 
 # for x in range(0,5):
 #      print(f"{data[x][3]}  {data[x][0]}    {data[x][1]}  {format.timeuntil(data[x][2])}")
@@ -22,11 +22,30 @@ data = format.getdata()
 def truncate(destinput):
     if destinput == "Old Steine south":
         destinput = "Old Steine"
-    if len(destinput) > 12:
-        trunc = destinput[:10]
-        return (f"{trunc}...")
-    else:
-        return (destinput)
+    if "Eastbourne" in destinput.split():
+        destinput = "Eastbourne"
+    left, top, right, bottom = bold19.getbbox(destinput)
+    width = right - left
+    height = bottom - top
+    trunc = destinput
+    print(width, height)
+    while width > 119:
+        if trunc[-3:] == "...":
+            trunc = trunc[:-3]
+        trunc = trunc[:-1]
+        trunc = f"{trunc}..."
+        left, top, right, bottom = bold19.getbbox(trunc)
+        width = right - left
+        height = bottom - top       
+        print(width, height)
+    return trunc
+    # if len(destinput) > 12:
+    #     trunc = destinput[:10]
+    #     return (f"{trunc}...")
+    # else:
+    #     return (destinput)
+
+
 
 
 def generatebus():
@@ -50,13 +69,13 @@ def generatebus():
     start = 36
 
     for x in range(0, 5):
-        if data[x][3] == "Northbound":
+        if busdata[x][3] == "Northbound":
             arrow = up
         else:
             arrow = down
-        route_number = data[x][0]
-        route_dest = truncate(data[x][1])
-        time = format.timeuntil(data[x][2])
+        route_number = busdata[x][0]
+        route_dest = truncate(busdata[x][1])
+        time = format.timeuntil(busdata[x][2])
         image.paste(up, (4, start-13+(increment*x)))
         # draw.text((10, start+(increment*x)+7), ns, font=bold19, fill=white, anchor="mm")
         draw.text((17, start+(increment*x)), route_number,
@@ -68,10 +87,7 @@ def generatebus():
 
     draw.text((244, 2), format.currenttime(),
               font=extrabold19, fill=black, anchor="rt")
-
     image.show()
-
     return image
-
 
 generatebus()
