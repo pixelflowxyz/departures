@@ -41,7 +41,6 @@ def truncate(destinput):
     #     return (f"{trunc}...")
     # else:
     #     return (destinput)
-✨ added basic e-ink code
 
 
 
