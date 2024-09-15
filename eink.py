@@ -18,11 +18,11 @@ def eink(mode):
         display_image = epd.getbuffer(image)
 
         if force_full_update or refresh_count >= 10:
-            epd.init(epd.FULL_UPDATE)
+            epd.init()
             epd.display(display_image)
             refresh_count = 1
         else:
-            epd.init(epd.PART_UPDATE)
+            epd.init_fast()
             epd.display_fast(display_image)
             refresh_count += 1
     
