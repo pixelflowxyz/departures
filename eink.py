@@ -1,4 +1,5 @@
 import display
+import time
 
 from waveshare_epd import epd2in13_V4
 
@@ -17,11 +18,11 @@ def eink(mode):
 
         if force_full_update or refresh_count >= 10:
             epd.init(epd.FULL_UPDATE)
-            epd.displayPartBaseImage(display_image)
+            epd.display(display_image)
             refresh_count = 1
         else:
             epd.init(epd.PART_UPDATE)
-            epd.displayPartial(display_image)
+            epd.display_fast(display_image)
             refresh_count += 1
     
     if mode == "reset":
@@ -30,3 +31,5 @@ def eink(mode):
         
 while True:
     eink("on")
+    time.sleep(10)
+    
