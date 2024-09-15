@@ -26,9 +26,7 @@ def truncate(destinput):
         destinput = "Eastbourne"
     left, top, right, bottom = bold19.getbbox(destinput)
     width = right - left
-    height = bottom - top
     trunc = destinput
-    print(width, height)
     while width > 119:
         if trunc[-3:] == "...":
             trunc = trunc[:-3]
@@ -37,14 +35,13 @@ def truncate(destinput):
         left, top, right, bottom = bold19.getbbox(trunc)
         width = right - left
         height = bottom - top       
-        print(width, height)
     return trunc
     # if len(destinput) > 12:
     #     trunc = destinput[:10]
     #     return (f"{trunc}...")
     # else:
     #     return (destinput)
-
+✨ added basic e-ink code
 
 
 
@@ -55,12 +52,12 @@ def generatebus():
     draw = ImageDraw.Draw(image)
     draw.rectangle(((0, 0), (250, 17)), fill=white)
 
-    bus = Image.open('fonts/bus.png')
+    bus = Image.open('assets/bus.png')
     image.paste(bus, (3, 1))
 
-    up = Image.open('fonts/up.png')
-    down = Image.open('fonts/up.png')
-    arrow = up
+    up = Image.open('assets/up.png')
+    down = Image.open('assets/down.png')
+    arrow = down
 
     draw.text((22, 2), stop_name, font=extrabold19,
               fill=black, anchor="lt")  # Title
@@ -76,7 +73,7 @@ def generatebus():
         route_number = busdata[x][0]
         route_dest = truncate(busdata[x][1])
         time = format.timeuntil(busdata[x][2])
-        image.paste(up, (4, start-13+(increment*x)))
+        image.paste(arrow, (4, start-13+(increment*x)))
         # draw.text((10, start+(increment*x)+7), ns, font=bold19, fill=white, anchor="mm")
         draw.text((17, start+(increment*x)), route_number,
                   font=bold19, fill=white, anchor="ls")  # Route number
@@ -87,7 +84,6 @@ def generatebus():
 
     draw.text((244, 2), format.currenttime(),
               font=extrabold19, fill=black, anchor="rt")
-    image.show()
     return image
 
-generatebus()
+
