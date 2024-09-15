@@ -1,9 +1,9 @@
 import display
 
-from TP_lib import epd2in13_V2
+from waveshare_epd import epd2in13_V4
 
-DISPLAY = epd2in13_V2.EPD_2IN13_V2()
-DISPLAY.init(DISPLAY.FULL_UPDATE)
+epd = epd2in13_V4.EPD()
+epd.init(epd.FULL_UPDATE)
 
 refresh_count = 0
 
@@ -13,20 +13,20 @@ def eink(mode):
     if mode == "on":
         global refresh_count
         image = display.generatebus()
-        display_image = DISPLAY.getbuffer(image)
+        display_image = epd.getbuffer(image)
 
         if force_full_update or refresh_count >= 10:
-            DISPLAY.init(DISPLAY.FULL_UPDATE)
-            DISPLAY.displayPartBaseImage(display_image)
+            epd.init(epd.FULL_UPDATE)
+            epd.displayPartBaseImage(display_image)
             refresh_count = 1
         else:
-            DISPLAY.init(DISPLAY.PART_UPDATE)
-            DISPLAY.displayPartial(display_image)
+            epd.init(epd.PART_UPDATE)
+            epd.displayPartial(display_image)
             refresh_count += 1
     
     if mode == "reset":
-        DISPLAY.init()
-        DISPLAY.Clear(0xFF)
+        epd.init()
+        epd.Clear(0xFF)
         
 while True:
     eink("on")
