@@ -4,7 +4,8 @@ import time
 from waveshare_epd import epd2in13_V4
 
 epd = epd2in13_V4.EPD()
-epd.init(epd.FULL_UPDATE)
+epd.init()
+epd.Clear(0xFF)w
 
 refresh_count = 0
 
