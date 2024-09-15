@@ -11,7 +11,7 @@ black = 0
 white = 255
 
 width = 250
-height = 112
+height = 122
 
 busdata = format.getdata()
 
