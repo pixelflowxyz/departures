@@ -32,5 +32,5 @@ def eink(mode):
         
 while True:
     eink("on")
-    time.sleep(10)
+    time.sleep(100)
     
